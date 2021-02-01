@@ -11,7 +11,7 @@ from scrollBrowserToEnd import scrollBrowserToEnd
 googleSearchKeyword = "cafe"
 
 # [이미지가 저장될 폴더의 이름을 검색어로 설정]
-saveImageDirectory = f"./images2"
+saveImageDirectory = f"./images3"
 
 # [구글 크롬 웹 드라이버 초기 설정]
 driver = webdriver.Chrome()
@@ -21,7 +21,7 @@ driver.set_window_size(1280, 1024)
 
 # [구글 이미지 검색 홈페이지 띄우기] 프로그램 시작 시, 첫 화면으로 띄워지길 원하는 웹사이트의 URL 주소를 get() 함수로 받아옴
 # driver.get("https://www.google.com/search?q=arborele%20de%20cafea%20arabica&tbm=isch&hl=en&tbs=rimg:CZ7r0mY8KsajYUGmb-euRfvB&sa=X&ved=0CBsQuIIBahcKEwiwloaco8DuAhUAAAAAHQAAAAAQBw&biw=1519&bih=698")
-driver.get("https://www.google.com/search?q=unripecafea+arabica&tbm=isch&ved=2ahUKEwiq6bn43MfuAhXoCrkGHYkIDz0Q2-cCegQIABAA&oq=unripecafea+arabica&gs_lcp=CgNpbWcQAzoECCMQJzoGCAAQCBAeOgYIABAHEB46BAgAEB46BAgAEBg6BggAEAoQGFCoW1iNggFg9YQBaABwAHgAgAFsiAG5ApIBAzAuM5gBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=CXMXYOrACeiV5OUPiZG86AM&bih=698&biw=1519&hl=en")
+driver.get("https://www.google.com/search?q=coffee+bean+plant&client=ubuntu&hs=Mn5&sxsrf=ALeKk02Dgjgjx5YmiXqrdRnpIdPqHPM2_Q:1612218015843&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjp1ImR3MnuAhWDmlkKHd77BVYQ_AUoAXoECCAQAw&biw=1314&bih=598")
 
 # [구글 검색창 찾기] 구글 크롬 브라우저 접속 후, 개발자 도구(F12)를 눌러 구글 검색창의 요소 중 "name"="q"를 찾아 googleSearchElement 변수에 저장하고 커서를 위치시킨다.
 # googleSearchElement = driver.find_element_by_name("q")
