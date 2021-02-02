@@ -15,8 +15,21 @@ def image(path):
   for i in range(height//imgheight):
     for j in range(width//imgwidth):
       box = (j*imgwidth, i*imgheight, (j+1)*imgwidth, (i+1)*imgheight)
-      print(box)
       img = im.crop(box)
       img.save(filename+'-'+str(j) + '-' + str(i)+'.jpg')
-  
-image("./images2/cafe 8.jpg")
+
+from os import listdir
+from os.path import isfile, join
+
+mypath = './to-crop'
+
+onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+# print(onlyfiles)
+errors = []
+for x in onlyfiles:
+  try:
+    image(mypath + '/' + x)
+  except:
+    errors.append(x)
+print(errors)
+# image("./to-crop/cafe 2.jpg")
