@@ -25,7 +25,7 @@ IMAGE_DIMS = (70, 70, 3)
 
 # grab the image paths and randomly shuffle them
 print("[INFO] loading images...")
-path_input = "./data/raw/"
+path_input = "././data/raw/"
 imagePaths = sorted(list(paths.list_images(path_input)))
 random.seed(42)
 random.shuffle(imagePaths)
@@ -53,7 +53,7 @@ y = mlb.transform(labels)
 
 # save the multi-label binarizer to disk
 print("[INFO] serializing label binarizer...")
-path_output = "./data/processed/"
+path_output = "././data/processed/"
 f = open(path_output + "mlb.pickle", "wb")
 f.write(pickle.dumps(mlb))
 f.close()
