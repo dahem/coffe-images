@@ -7,9 +7,10 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.image import img_to_array
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.model_selection import train_test_split
-from pyimagesearch.smallervggnet import SmallerVGGNet
+import src.data.make_dataset as dataset
+import src.models.smallervggnet as model
+
 import matplotlib.pyplot as plt
-from imutils import paths
 import tensorflow as tf
 import numpy as np
 import argparse
@@ -27,17 +28,12 @@ IMAGE_DIMS = (70, 70, 3)
 # disable eager execution
 tf.compat.v1.disable_eager_execution()
 
-# save the multi-label binarizer to disk
-print("[INFO] serializing label binarizer...")
-path_labelbin = ''
-mlb = pickle.loads(open(path_labelbin, "rb").read())
-
-
 # grab the image paths and randomly shuffle them
 print("[INFO] loading images...")
 # initialize the data and labels
-data = []
-labels = []
+data, labels = dataset.create_dataset()
+print(len(data))
+print(len(labels))
 
 # partition the data into training and testing splits using 80% of
 # the data for training and the remaining 20% for testing
@@ -48,12 +44,17 @@ aug = ImageDataGenerator(rotation_range=25, width_shift_range=0.1,
 	height_shift_range=0.1, shear_range=0.2, zoom_range=0.2,
 	horizontal_flip=True, fill_mode="nearest")
 
+# save the multi-label binarizer to disk
+print("[INFO] serializing label binarizer...")
+path_labelbin = "././models/mlb.pickle"
+mlb = pickle.loads(open(path_labelbin, "rb").read())
+
 # initialize the model using a sigmoid activation as the final layer
 # in the network so we can perform multi-label classification
 print("[INFO] compiling model...")
-model = SmallerVGGNet.build(
+model = model.SmallerVGGNet.build(
 	width=IMAGE_DIMS[1], height=IMAGE_DIMS[0],
-	depth=IMAGE_DIMS[2], classes=len(8),
+	depth=IMAGE_DIMS[2], classes=len(mlb.classes_),
 	finalAct="sigmoid")
 # initialize the optimizer (SGD is sufficient)
 opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
@@ -64,6 +65,7 @@ opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
 # is to treat each output label as an independent Bernoulli
 # distribution
 model.compile(loss="binary_crossentropy", optimizer=opt,metrics=["accuracy"])
+
 # train the network
 print("[INFO] training network...")
 H = model.fit(
@@ -74,7 +76,7 @@ H = model.fit(
 
 # save the model to disk
 print("[INFO] serializing network...")
-out_model = "coffematuration"
+out_model = "././models/coffematuration"
 model.save(out_model, save_format="h5")
 # save the multi-label binarizer to disk
 print("[INFO] serializing label binarizer...")

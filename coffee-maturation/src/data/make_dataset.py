@@ -1,6 +1,7 @@
 from imutils import paths
 #import argparse
 import random
+import numpy as np
 import cv2
 import os
 import pickle
@@ -52,13 +53,16 @@ def create_dataset():
 		l = tuple(l)
 		labels.append(l)
 		
+	X = np.array(X, dtype='float') / 255.0
+	labels = np.array(labels)
+
 	mlb = MultiLabelBinarizer()
 	mlb.fit(labels)
 	y = mlb.transform(labels)
 	
 	# save the multi-label binarizer to disk
 	print("[INFO] serializing label binarizer...")
-	path_output = "././data/processed/"
+	path_output = "././models/"
 	f = open(path_output + "mlb.pickle", "wb")
 	f.write(pickle.dumps(mlb))
 	f.close()
