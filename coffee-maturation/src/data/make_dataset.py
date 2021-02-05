@@ -1,22 +1,23 @@
 from imutils import paths
-import argparse
+#import argparse
 import random
 import cv2
 import os
+import pickle
 from tensorflow.keras.preprocessing.image import img_to_array
 from sklearn.preprocessing import MultiLabelBinarizer
 
 # construct the argument parse and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", required=True,
-	help="path to input dataset (i.e., directory of images)")
-ap.add_argument("-m", "--model", required=True,
-	help="path to output model")
-ap.add_argument("-l", "--labelbin", required=True,
-	help="path to output label binarizer")
-ap.add_argument("-p", "--plot", type=str, default="plot.png",
-	help="path to output accuracy/loss plot")
-args = vars(ap.parse_args())
+#ap = argparse.ArgumentParser()
+#ap.add_argument("-d", "--dataset", required=True,
+#	help="path to input dataset (i.e., directory of images)")
+#ap.add_argument("-m", "--model", required=True,
+#	help="path to output model")
+#ap.add_argument("-l", "--labelbin", required=True,
+#	help="path to output label binarizer")
+#ap.add_argument("-p", "--plot", type=str, default="plot.png",
+#	help="path to output accuracy/loss plot")
+#args = vars(ap.parse_args())
 
 # initialize the number of epochs to train for, initial learning rate,
 # batch size, and image dimensions
@@ -24,7 +25,8 @@ IMAGE_DIMS = (70, 70, 3)
 
 # grab the image paths and randomly shuffle them
 print("[INFO] loading images...")
-imagePaths = sorted(list(paths.list_images(args["dataset"])))
+path_input = "./data/raw/"
+imagePaths = sorted(list(paths.list_images(path_input)))
 random.seed(42)
 random.shuffle(imagePaths)
 
@@ -48,3 +50,10 @@ for imagePath in imagePaths:
 mlb = MultiLabelBinarizer()
 mlb.fit(labels)
 y = mlb.transform(labels)
+
+# save the multi-label binarizer to disk
+print("[INFO] serializing label binarizer...")
+path_output = "./data/processed/"
+f = open(path_output + "mlb.pickle", "wb")
+f.write(pickle.dumps(mlb))
+f.close()
