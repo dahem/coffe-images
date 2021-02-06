@@ -2,8 +2,8 @@
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
 import numpy as np
-import argparse
-import imutils
+#import argparse
+#import imutils
 import pickle
 import cv2
 import os
@@ -21,14 +21,14 @@ mlb = pickle.loads(open(path_labelbin, "rb").read())
 print(mlb.classes_)
 # ['back' 'green' 'leaf' 'noise' 'purple' 'red' 'sky' 'yellow']
 
-min_prob_0 = 0.3
-min_prob_1 = 0.3# 0.4
-min_prob_2 = 0.7
-min_prob_3 = 0.35
-min_prob_4 = 0.15
-min_prob_5 = 0.2
-min_prob_6 = 0.2
-min_prob_7 = 0.15
+min_prob_0 = 0.043#0.3
+min_prob_1 = 0.07#0.3# 0.4
+min_prob_2 = 0.34#0.7
+min_prob_3 = 0.26#0.35
+min_prob_4 = 0.11#0.15
+min_prob_5 = 0.14#0.2
+min_prob_6 = 0.005#0.2
+min_prob_7 = 0.04#0.15
 
 
 
@@ -70,10 +70,10 @@ for (x, y, roi) in slidewin.sliding_window(img_copy, int(step), (w, h)):
     # print("roi shape: ", roi.shape)
     # if roi.shape[1] != w or roi.shape[0] != h:
     #         continue
-    rxx, ryy, rxx2, ryy2 = int(x), int(y), int((x+step)), int((y+step))
+    rxx, ryy, rxx2, ryy2 = int(x), int(y), int((x + step)), int((y + step))
     # coord.append([rx,ry,rx2,ry2,roi])
 
-    if roi.shape == (step,step,3):
+    if roi.shape == (step, step, 3):
         roi = roi.astype("float") / 255.0
         roi = img_to_array(roi)
         
