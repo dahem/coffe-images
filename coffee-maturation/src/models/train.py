@@ -76,7 +76,7 @@ H = model.fit(
 
 # save the model to disk
 print("[INFO] serializing network...")
-out_model = "././models/coffematuration"
+out_model = "././models/coffematuration.h5"
 model.save(out_model, save_format="h5")
 # save the multi-label binarizer to disk
 print("[INFO] serializing label binarizer...")
