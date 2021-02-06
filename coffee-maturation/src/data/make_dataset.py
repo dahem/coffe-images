@@ -31,7 +31,7 @@ def create_dataset():
 	
 	# grab the image paths and randomly shuffle them
 	print("[INFO] loading images...")
-	path_input = "././data/raw/"
+	path_input = "././data/raw/train/"
 	imagePaths = sorted(list(paths.list_images(path_input)))
 	random.seed(42)
 	random.shuffle(imagePaths)
