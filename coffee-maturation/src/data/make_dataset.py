@@ -31,7 +31,7 @@ def create_dataset():
 	
 	# grab the image paths and randomly shuffle them
 	print("[INFO] loading images...")
-	path_input = "././data/raw/"
+	path_input = "././data/raw/train/"
 	imagePaths = sorted(list(paths.list_images(path_input)))
 	random.seed(42)
 	random.shuffle(imagePaths)
@@ -55,10 +55,12 @@ def create_dataset():
 		
 	X = np.array(X, dtype='float') / 255.0
 	labels = np.array(labels)
+	print(labels[5:15])
 
 	mlb = MultiLabelBinarizer()
 	mlb.fit(labels)
 	y = mlb.transform(labels)
+	print(y[5:15])
 	
 	# save the multi-label binarizer to disk
 	print("[INFO] serializing label binarizer...")
