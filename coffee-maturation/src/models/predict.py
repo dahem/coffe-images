@@ -9,6 +9,7 @@ import cv2
 import os
 
 import src.models.sliding_window as slidewin
+import src.models.non_maximum as slidmax
 
 # load the trained convolutional neural network and the multi-label
 # binarizer
@@ -32,8 +33,8 @@ min_prob_7 = 0.2
 
 
 step = 70
-path_img_val = "././data/raw/validation/cafe727.jpg"
-filename = "cafe727"
+path_img_val = "././data/raw/validation/cafe699.jpg"
+filename = "cafe699"
 # load the image
 image = cv2.imread(path_img_val)
 w, h = image.shape[0], image.shape[1]
@@ -62,14 +63,14 @@ try:
     img_copy_7 = image.copy()
     img_copy_8 = image.copy()
 except:
-    raise Exception("The following file ({}) is not an image!".format(img_color))
+    raise Exception("The following file ({}) is not an image!".format(image))
 
 for (x, y, roi) in slidewin.sliding_window(img_copy, int(step), (w, h)):
     print(x, y)
     # print("roi shape: ", roi.shape)
     # if roi.shape[1] != w or roi.shape[0] != h:
     #         continue
-    rxx, ryy, rxx2, ryy2 = int(x), int(y), int((x+w)), int((y+h))
+    rxx, ryy, rxx2, ryy2 = int(x), int(y), int((x+step)), int((y+step))
     # coord.append([rx,ry,rx2,ry2,roi])
 
     if roi.shape == (step,step,3):
@@ -109,6 +110,15 @@ windows_4 = np.array(rec_4)
 windows_5 = np.array(rec_5)
 windows_6 = np.array(rec_6)
 windows_7 = np.array(rec_7)
+
+# windows_0 = slidmax.non_max_suppression_fast(windows_0,0.1)
+# windows_1 = slidmax.non_max_suppression_fast(windows_1,0.1)
+# windows_2 = slidmax.non_max_suppression_fast(windows_2,0.1)
+# windows_3 = slidmax.non_max_suppression_fast(windows_3,0.1)
+# windows_4 = slidmax.non_max_suppression_fast(windows_4,0.1)
+# windows_5 = slidmax.non_max_suppression_fast(windows_5,0.1)
+# windows_6 = slidmax.non_max_suppression_fast(windows_6,0.1)
+# windows_7 = slidmax.non_max_suppression_fast(windows_7,0.1)
 
 save_path = "././data/processed"
 
