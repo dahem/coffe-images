@@ -19,10 +19,11 @@ model = load_model(out_model)
 path_labelbin = "././models/mlb.pickle"
 mlb = pickle.loads(open(path_labelbin, "rb").read())
 print(mlb.classes_)
+
 # ['back' 'green' 'leaf' 'noise' 'purple' 'red' 'sky' 'yellow']
 
 min_prob_0 = 0.043#0.3
-min_prob_1 = 0.07#0.3# 0.4
+min_prob_1 = 0.29#0.3# 0.4
 min_prob_2 = 0.34#0.7
 min_prob_3 = 0.26#0.35
 min_prob_4 = 0.11#0.15
@@ -130,15 +131,16 @@ os.makedirs(sv, exist_ok=True)
 cv2.imwrite(sv + '/' + filename + '.jpg' ,img_copy_0)
 
 for (x, y, x2, y2, prob) in windows_1:
-    cv2.rectangle(img_copy_1, (int(x),int(y)), (int(x2),int(y2)), (0,255,0), 2)
-    cv2.rectangle(img_copy_8, (int(x),int(y)), (int(x2),int(y2)), (0,255,0), 2)
+    cv2.putText(img_copy_1, "{:.2f}%".format(prob * 100), (int(x)+5, int(y)+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+    cv2.rectangle(img_copy_1, (int(x),int(y)), (int(x2),int(y2)), (0,255,0), 3)
+    cv2.rectangle(img_copy_8, (int(x),int(y)), (int(x2),int(y2)), (0,255,0), 3)
 sv = os.path.join(save_path, "verde")
 os.makedirs(sv, exist_ok=True)
 cv2.imwrite(sv + '/' + filename + ".jpg",img_copy_1)
 
 for (x, y, x2, y2, prob) in windows_2:
     label = "{:.2f}%".format(prob * 100)
-    cv2.putText(img_copy_2, label, (int(x)+5, int(y)+5), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+    cv2.putText(img_copy_2, label, (int(x)+5, int(y)+15), cv2.FONT_HERSHEY_SIMPLEX, 0.2, (0, 0, 0), 1)
     cv2.rectangle(img_copy_2, (int(x),int(y)), (int(x2),int(y2)), (0,100,0), 2)
     # cv2.rectangle(img_copy_8, (int(x),int(y)), (int(x2),int(y2)), (0,100,0), 2)
 sv = os.path.join(save_path, "hoja")
@@ -153,15 +155,15 @@ os.makedirs(sv, exist_ok=True)
 cv2.imwrite(sv +'/'+ filename + ".jpg",img_copy_3)
 
 for (x, y, x2, y2, prob) in windows_4:
-    cv2.rectangle(img_copy_4, (int(x),int(y)), (int(x2),int(y2)), (225,0,255), 2)
-    cv2.rectangle(img_copy_8, (int(x),int(y)), (int(x2),int(y2)), (255,0,255), 2)
+    cv2.rectangle(img_copy_4, (int(x),int(y)), (int(x2),int(y2)), (225,0,255), 3)
+    cv2.rectangle(img_copy_8, (int(x),int(y)), (int(x2),int(y2)), (255,0,255), 3)
 sv = os.path.join(save_path, "cereza")
 os.makedirs(sv, exist_ok=True)
 cv2.imwrite(sv+'/'+  filename + ".jpg",img_copy_4)
 
 for (x, y, x2, y2, prob) in windows_5:
-    cv2.rectangle(img_copy_5, (int(x),int(y)), (int(x2),int(y2)), (0,0,255), 2)
-    cv2.rectangle(img_copy_8, (int(x),int(y)), (int(x2),int(y2)), (0,0,255), 2)
+    cv2.rectangle(img_copy_5, (int(x),int(y)), (int(x2),int(y2)), (0,0,255), 3)
+    cv2.rectangle(img_copy_8, (int(x),int(y)), (int(x2),int(y2)), (0,0,255), 3)
 sv = os.path.join(save_path, "rojo")
 os.makedirs(sv, exist_ok=True)
 cv2.imwrite(sv + '/'+  filename + ".jpg",img_copy_5)
@@ -175,7 +177,7 @@ cv2.imwrite(sv + '/'+  filename + ".jpg", img_copy_6)
 
 for (x, y, x2, y2, prob) in windows_7:
     cv2.rectangle(img_copy_7, (int(x),int(y)), (int(x2),int(y2)), (0,255,255), 2)
-    cv2.rectangle(img_copy_8, (int(x),int(y)), (int(x2),int(y2)), (0,255,255), 2)
+    # cv2.rectangle(img_copy_8, (int(x),int(y)), (int(x2),int(y2)), (0,255,255), 2)
 sv = os.path.join(save_path, "amarillo")
 os.makedirs(sv, exist_ok=True)
 cv2.imwrite(sv + '/'+  filename + ".jpg", img_copy_7)
